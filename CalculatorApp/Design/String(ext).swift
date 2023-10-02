@@ -6,3 +6,12 @@
 //
 
 import Foundation
+
+extension String: DoubleValue {
+      public var double: Double {
+        guard let number =  Double(self) else { return 0.0 }
+        return number
+    }
+   
+}
+

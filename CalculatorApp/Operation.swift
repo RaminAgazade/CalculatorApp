@@ -6,3 +6,16 @@
 //
 
 import Foundation
+
+public enum Operation: String {
+  case none  = ""
+  case sqrt  = "√"
+  case add   = "+"
+  case sub   = "-"
+  case div   = "/"
+  case mult  = "X"
+  case per   = "%"
+ case equal  = "="
+
+    
+}

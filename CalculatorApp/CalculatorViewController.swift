@@ -7,23 +7,54 @@
 
 import UIKit
 
-class CalculatorViewController: UIViewController {
+public protocol CalculatorViewControllerDelegate {
+    func click(number: String) -> String
+    func allClear()
+    func clickPlusMinus() -> String
+    func clickDot() -> String
+    func click(operation: Operation) -> String
+}
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+public class CalculatorViewController: ViewController {
+@IBOutlet weak var label: Label!
+    
+public var delegate: CalculatorViewControllerDelegate?
+    public init(delegate: CalculatorViewControllerDelegate? = nil) {
+        self.delegate = delegate
+       super.init(nibName: nil, bundle: nil)
     }
-
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    public required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
-    */
+    
+    
+    
+    @IBAction func clickNumber(_ sender: Button) {
+        label.text = delegate?.click(number: sender.string)
+    }
+    
+    @IBAction func allClear(_ sender: Button) {
+        delegate?.allClear()
+        label.text = "0"
+    }
+    
+    @IBAction func clickPlusMinus(_ sender: Button) {
+        label.text = delegate?.clickPlusMinus()
+    }
+    
+    @IBAction func clickDot(_ sender: Button) {
+        label.text = delegate?.clickDot()
+    }
+    
+    
+    @IBAction func clickOperations(_ sender: Button) {
+        
+        guard let operation = Operation(rawValue: sender.string) else {
+            return
+            
+        }
+
+        label.text = delegate?.click(operation: operation)
+    }
 
 }
